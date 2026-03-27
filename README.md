@@ -125,7 +125,8 @@ info('New version available');
 ```
 
 <p align="center">
-  <img src="./img/basic-1.gif" width="300" alt="Basic toasts" />
+  <img src="./img/basic.gif" width="300" alt="Basic toasts" />
+  <img src="./img/basic-dark.gif" width="300" alt="Basic toasts" />
 </p>
 
 ### With Description
@@ -151,6 +152,7 @@ info('System Toast', 'Adapts automatically');
 
 <p align="center">
   <img src="./img/themes.gif" width="300" alt="Themes demo" />
+  <img src="./img/themes-dark.gif" width="300" alt="Themes demo" />
 </p>
 
 ### Positioning
@@ -170,10 +172,6 @@ success('Top toast!');
 - **Position Isolation**: Toasts at the `top` are stacked independently from toasts at the `bottom`.
 - **Dynamic Adjustments**: When a toast with a description or an action button appears (making it taller), the entire stack shifts smoothly to maintain a perfect gap (8px).
 - **Auto-Flow**: As toasts are dismissed, the remaining ones slide to their new positions without restarting their timers.
-
-<p align="center">
-  <img src="./img/stacking.gif" width="300" alt="Smart stacking demo" />
-</p>
 
 ### Custom Icons
 
@@ -226,6 +224,7 @@ warning('Booking Confirmed', 'Check-in starts in 2h.', {
 
 <p align="center">
   <img src="./img/actions.gif" width="300" alt="Actions demo" />
+  <img src="./img/actions-dark.gif" width="300" alt="Actions demo" />
 </p>
 
 ### Promise Tracking
@@ -258,6 +257,7 @@ promise(uploadFile(), {
 
 <p align="center">
   <img src="./img/promises.gif" width="300" alt="Promise tracking demo" />
+  <img src="./img/promises-dark.gif" width="300" alt="Promise tracking demo" />
 </p>
 
 ### Loading Toast (Manual)
