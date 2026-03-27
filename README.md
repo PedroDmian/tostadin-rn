@@ -14,6 +14,7 @@ A beautiful, gesture-driven toast notification system for React Native — inspi
 - ⏳ **Promise support** — loading → success/error transitions
 - 🧩 **Custom icons** — bring your own (Lucide, FontAwesome, emoji, Image…)
 - 🎯 **Action buttons** — interactive buttons inside the toast
+- 🥞 **Smart Stacking** — dynamic height calculation for perfect piling
 - 💅 **Fully customizable** — override any style via props
 
 <p align="center">
@@ -161,6 +162,18 @@ success('Bottom toast!', undefined, { position: 'bottom' });
 // Top (default)
 success('Top toast!');
 ```
+
+### Smart Stacking
+
+`tostadin-rn` uses a dynamic stacking system that measures the **actual height** of every toast:
+
+- **Position Isolation**: Toasts at the `top` are stacked independently from toasts at the `bottom`.
+- **Dynamic Adjustments**: When a toast with a description or an action button appears (making it taller), the entire stack shifts smoothly to maintain a perfect gap (8px).
+- **Auto-Flow**: As toasts are dismissed, the remaining ones slide to their new positions without restarting their timers.
+
+<p align="center">
+  <img src="./img/stacking.gif" width="300" alt="Smart stacking demo" />
+</p>
 
 ### Custom Icons
 

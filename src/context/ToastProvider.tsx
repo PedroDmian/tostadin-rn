@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useState } from 'react';
+import React, { createContext, useCallback, useRef, useState } from 'react';
 import type {
   ToastOptions,
   ToastProps,
@@ -11,6 +11,7 @@ import {
   resolveDynamicOption,
 } from '../core';
 import { Toast } from '../components';
+import { TOAST_GAP } from '../constants';
 
 export const ToastContext = createContext<ToastContextType | undefined>(
   undefined
@@ -20,15 +21,27 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [toasts, setToasts] = useState<ToastProps[]>([]);
+  const heightsRef = useRef<Record<string, number>>({});
 
   const hideToast = useCallback((id: string) => {
+    delete heightsRef.current[id];
+
     setToasts((prev) => prev.filter((t) => t.id !== id));
+  }, []);
+
+  const handleHeightChange = useCallback((id: string, height: number) => {
+    if (heightsRef.current[id] !== height) {
+      heightsRef.current[id] = height;
+
+      setToasts((prev) => [...prev]);
+    }
   }, []);
 
   const showToast = useCallback(
     (options: ToastOptions) => {
       const toast = createToast(options, hideToast);
       setToasts((prev) => [...prev, toast]);
+
       return toast.id;
     },
     [hideToast]
@@ -104,6 +117,30 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({
     [loading, updateToast]
   );
 
+  // ** Calculate "offsets" by position
+  const getOffsetForToast = (
+    toastId: string,
+    pos: string,
+    list: ToastProps[]
+  ): number => {
+    const samePositionToasts = list.filter(
+      (t) => (t.position || 'top') === pos
+    );
+    const index = samePositionToasts.findIndex((t) => t.id === toastId);
+
+    let cumulativeOffset = 0;
+
+    // ? The most recent toasts go first (closest to the edge)
+    // ? The oldest ones are moving
+    for (let i = samePositionToasts.length - 1; i > index; i--) {
+      const h = heightsRef.current[samePositionToasts[i]!.id] || 0;
+
+      cumulativeOffset += h + TOAST_GAP;
+    }
+
+    return cumulativeOffset;
+  };
+
   // TODO: Provider
   const contextValue: ToastContextType = {
     showToast,
@@ -120,7 +157,12 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({
     <ToastContext.Provider value={contextValue}>
       {children}
       {toasts.map((toast) => (
-        <Toast key={toast.id} {...toast} />
+        <Toast
+          key={toast.id}
+          {...toast}
+          offset={getOffsetForToast(toast.id, toast.position || 'top', toasts)}
+          onHeightChange={handleHeightChange}
+        />
       ))}
     </ToastContext.Provider>
   );

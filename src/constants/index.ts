@@ -36,3 +36,8 @@ export const ANIMATION = {
 export const GESTURE = {
   SWIPE_THRESHOLD: 40,
 } as const;
+
+/**
+ * ? Toast gap
+ */
+export const TOAST_GAP = 8;

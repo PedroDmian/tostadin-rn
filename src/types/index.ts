@@ -28,6 +28,8 @@ export interface ToastProps {
   messageStyle?: TextStyle;
   descriptionStyle?: TextStyle;
   onHide: (id: string) => void;
+  offset?: number;
+  onHeightChange?: (id: string, height: number) => void;
 }
 
 // ? Toast Options (public API – what the user passes)

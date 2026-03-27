@@ -555,7 +555,7 @@ const HomeScreen = ({
           <Text style={[s.title, { color: c.text }]}>🍞 tostadin</Text>
         </View>
         <View style={s.headerRight}>
-          <Text style={[s.version, { color: c.textTertiary }]}>v0.0.1</Text>
+          <Text style={[s.version, { color: c.textTertiary }]}>v0.0.3</Text>
           <TouchableOpacity
             style={[s.themeToggle, { backgroundColor: c.tabBg }]}
             onPress={() => setIsDark((prev) => !prev)}

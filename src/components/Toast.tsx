@@ -38,12 +38,18 @@ export const Toast: React.FC<ToastProps> = ({
   messageStyle,
   descriptionStyle,
   onHide,
+  offset = 0,
+  onHeightChange,
 }) => {
   const isTop = position === 'top';
   const posConfig = React.useMemo(
     () => getPositionConfig(position),
     [position]
   );
+
+  const targetEnd = isTop ? posConfig.endY + offset : posConfig.endY - offset;
+  const targetEndRef = useRef(targetEnd);
+  targetEndRef.current = targetEnd;
 
   const translateY = useRef(new Animated.Value(posConfig.startY)).current;
   const opacity = useRef(new Animated.Value(0)).current;
@@ -95,7 +101,7 @@ export const Toast: React.FC<ToastProps> = ({
       onMoveShouldSetPanResponder: () => true,
       onPanResponderGrant: () => clearTimer(),
       onPanResponderMove: (_, gestureState) => {
-        const newY = posConfig.endY + gestureState.dy;
+        const newY = targetEndRef.current + gestureState.dy;
 
         if (isTop ? newY < 80 : newY > -100) {
           translateY.setValue(newY);
@@ -108,7 +114,7 @@ export const Toast: React.FC<ToastProps> = ({
           hide();
         } else {
           Animated.spring(translateY, {
-            toValue: posConfig.endY,
+            toValue: targetEndRef.current,
             useNativeDriver: true,
             friction: ANIMATION.FRICTION,
             tension: ANIMATION.TENSION,
@@ -119,7 +125,7 @@ export const Toast: React.FC<ToastProps> = ({
       },
       onPanResponderTerminate: () => {
         Animated.spring(translateY, {
-          toValue: posConfig.endY,
+          toValue: targetEndRef.current,
           useNativeDriver: true,
         }).start();
 
@@ -131,12 +137,13 @@ export const Toast: React.FC<ToastProps> = ({
   useEffect(() => {
     clearTimer();
     startTimer();
+    return () => clearTimer();
   }, [clearTimer, startTimer]);
 
   useEffect(() => {
     Animated.parallel([
       Animated.spring(translateY, {
-        toValue: posConfig.endY,
+        toValue: targetEnd,
         friction: ANIMATION.FRICTION,
         tension: ANIMATION.TENSION,
         useNativeDriver: true,
@@ -147,10 +154,7 @@ export const Toast: React.FC<ToastProps> = ({
         useNativeDriver: true,
       }),
     ]).start();
-
-    startTimer();
-    return () => clearTimer();
-  }, [clearTimer, opacity, posConfig.endY, startTimer, translateY]);
+  }, [opacity, targetEnd, translateY]);
 
   const hasExtra = !!description || !!action;
 
@@ -159,6 +163,14 @@ export const Toast: React.FC<ToastProps> = ({
     if (type === 'loading') return <LoadingIndicator color={typeColor} />;
     return <DefaultStatusDot color={typeColor} />;
   };
+
+  const handleLayout = React.useCallback(
+    (e: any) => {
+      const h = e.nativeEvent.layout.height;
+      onHeightChange?.(id, h);
+    },
+    [id, onHeightChange]
+  );
 
   return (
     <Animated.View
@@ -170,6 +182,7 @@ export const Toast: React.FC<ToastProps> = ({
       ]}
     >
       <View
+        onLayout={handleLayout}
         style={[
           styles.card,
           { backgroundColor, borderColor, borderWidth: 1 },
