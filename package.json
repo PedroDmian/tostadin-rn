@@ -1,7 +1,7 @@
 {
-  "name": "react-native-sileo-rn",
-  "version": "0.1.0",
-  "description": "Toast component for React Nativect.oast component for React.",
+  "name": "tostadin-rn",
+  "version": "0.0.1",
+  "description": "Tostadín – A beautiful toast component for React Native.",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
   "exports": {
@@ -32,13 +32,13 @@
     "!**/.*"
   ],
   "scripts": {
-    "example": "yarn workspace react-native-sileo-rn-example",
+    "example": "yarn workspace tostadin-rn-example",
     "clean": "del-cli lib",
     "prepare": "bob build",
     "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "test": "jest",
-    "release": "release-it --only-version"
+    "release": "release-it"
   },
   "keywords": [
     "react-native",
@@ -47,14 +47,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PedroDmian/react-native-sileo-rn.git"
+    "url": "git+https://github.com/PedroDmian/tostadin-rn.git"
   },
-  "author": "Damian Palomo <damian.palomo@outlook.es> (https://github.com/PedroDmian)",
+  "author": "Damian Palomo <pedrodamian411@gmail.com> (https://github.com/PedroDmian)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/PedroDmian/react-native-sileo-rn/issues"
+    "url": "https://github.com/PedroDmian/tostadin-rn/issues"
   },
-  "homepage": "https://github.com/PedroDmian/react-native-sileo-rn#readme",
+  "homepage": "https://github.com/PedroDmian/tostadin-rn#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
@@ -69,23 +69,28 @@
     "@types/jest": "^29.5.14",
     "@types/react": "^19.1.12",
     "commitlint": "^19.8.1",
+    "conventional-changelog-conventionalcommits": "^9.3.0",
     "del-cli": "^6.0.0",
     "eslint": "^9.35.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
     "jest": "^29.7.0",
     "lefthook": "^2.0.3",
+    "lucide-react-native": "*",
     "prettier": "^2.8.8",
     "react": "19.2.0",
     "react-native": "0.83.2",
     "react-native-builder-bob": "^0.40.18",
+    "react-native-svg": "*",
     "release-it": "^19.0.4",
     "turbo": "^2.5.6",
     "typescript": "^5.9.2"
   },
   "peerDependencies": {
+    "lucide-react-native": "*",
     "react": "*",
-    "react-native": "*"
+    "react-native": "*",
+    "react-native-svg": "*"
   },
   "workspaces": [
     "example"
@@ -141,9 +146,8 @@
     },
     "plugins": {
       "@release-it/conventional-changelog": {
-        "preset": {
-          "name": "angular"
-        }
+        "preset": "conventionalcommits",
+        "infile": "CHANGELOG.md"
       }
     }
   },

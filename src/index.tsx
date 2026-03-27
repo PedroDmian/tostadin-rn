@@ -1,3 +1,20 @@
-export function multiply(a: number, b: number): number {
-  return a * b;
-}
+// ? Context
+export { ToastProvider } from './context';
+
+// ? Hooks
+export { useToast } from './hooks';
+
+// ? Components
+export { Toast } from './components';
+
+// ? Types
+export type {
+  ToastType,
+  ToastTheme,
+  ToastPosition,
+  ToastAction,
+  ToastProps,
+  ToastOptions,
+  PromiseOptions,
+  ToastContextType,
+} from './types';

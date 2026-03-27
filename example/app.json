@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "SileoRn Example",
-    "slug": "react-native-sileo-rn-example",
-    "version": "1.0.0",
+    "name": "Tostadin RN Example",
+    "slug": "tostadin-rn-example",
+    "version": "0.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -13,7 +13,8 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "sileorn.example"
+      "bundleIdentifier": "tostadin.rn.example",
+      "appleTeamId": "SMPKNR4DY5"
     },
     "android": {
       "adaptiveIcon": {
@@ -22,7 +23,7 @@
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
-      "package": "sileorn.example"
+      "package": "tostadin.rn.example"
     },
     "web": {
       "favicon": "./assets/favicon.png"
