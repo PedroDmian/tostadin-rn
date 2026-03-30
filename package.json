@@ -1,6 +1,6 @@
 {
   "name": "tostadin-rn",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Tostadín – A beautiful toast component for React Native.",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
